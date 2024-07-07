@@ -49,7 +49,7 @@ class RM extends Device {
                     payload.copy(data, 0, 0x4);
                     console.log('payload', payload);
                     console.log('data', data);
-                    if (data[0] !== 0x1) break;
+                    //if (data[0] !== 0x1) break;
                     console.log("\x1b[31mBroadlink:\x1b[0m Valid RF Button Data Received - Sending RF Data.");
                     this.emit("rawRFData2", data);
                     break;

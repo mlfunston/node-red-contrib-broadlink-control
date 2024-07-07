@@ -66,7 +66,8 @@
                 clearInterval(innterval);
 
                 node.warn("Broadlink: Please tap the remote button.");
-                    innterval = setInterval(function () { _device.checkRFData2(); }, 1000);
+                node.status({fill:"green",shape:"ring",text:"Learning RF - Please tap remote button"});
+                innterval = setInterval(function () { _device.checkRFData2(); }, 1000);
             });
             _device.on("rawRFData2", (temp) => {
                 if (typeof (msg.payload) != "object") { msg.payload = {}; }

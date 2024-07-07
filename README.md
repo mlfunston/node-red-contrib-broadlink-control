@@ -129,6 +129,7 @@ var data = [38,0,140,0,77,21,18,22,38,21,17,22,17,22,38,21,18,21,18,22,37,22,17,
 msg.payload={
     //"mac":"MAC address of your broadlink rm",  // Optional if configured in the RM node
     //"host":"IP address of your broadlink rm",  // Optional if configured in the RM node
+    //"devType":"type id of your broadlink rm",  // Optional if configured in the RM node
     "action":"send",
     "data":data,
     "repeat":2
