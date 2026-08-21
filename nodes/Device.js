@@ -94,9 +94,18 @@ class Device {
 
         //console.log(payload); console.log(this.key, this.iv)
 
+        // Zero-pad the payload to the AES block size and encrypt it without PKCS#7 padding,
+        // the same way the Broadlink protocol (and python-broadlink) does it.
+        // cipher.update() only returns whole 16 byte blocks and the remainder comes out of
+        // cipher.final(), so keeping update() alone truncated every payload whose length was
+        // not a multiple of 16: a 538 byte IR frame lost its last 10 bytes and the device
+        // rejected it with error -7.
+        if (payload.length % 16 !== 0) {
+            payload = Buffer.concat([payload, Buffer.alloc(16 - (payload.length % 16), 0)]);
+        }
         var cipher = crypto.createCipheriv('aes-128-cbc', this.key, this.iv);
-        payload = cipher.update(payload);
-        var p2 = cipher.final();
+        cipher.setAutoPadding(false);
+        payload = Buffer.concat([cipher.update(payload), cipher.final()]);
         //console.log(packet);
         //console.log(payload);
 
